@@ -1,3 +1,11 @@
+#!/usr/bin/env python
+
+"""
+Registrar Web Application
+A Flask web application for Princeton University's registrar system.
+Provides API endpoints for searching classes and getting class details.
+"""
+
 import sys
 import argparse
 import sqlite3
@@ -5,7 +13,7 @@ from flask import Flask, request, jsonify, send_file
 
 app = Flask(__name__)
 
-database = "reg.sqlite"
+DATABASE = "reg.sqlite"
 
 
 def string_handler(s):
@@ -34,7 +42,7 @@ def reg_overviews():
     title = string_handler(request.args.get("title", ""))
 
     try:
-        conn = sqlite3.connect(database)
+        conn = sqlite3.connect(DATABASE)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -59,8 +67,8 @@ def reg_overviews():
         print(f"Database error: {e}", file=sys.stderr)
         return jsonify([False, "A server error occurred. "
                        "Please contact the system administrator."])
-    except Exception as e:
-        print(f"Unexpected error: {e}", file=sys.stderr)
+    except (ValueError, TypeError) as e:
+        print(f"Input error: {e}", file=sys.stderr)
         return jsonify([False, "A server error occurred. "
                        "Please contact the system administrator."])
 
@@ -78,7 +86,7 @@ def reg_details():
         return jsonify([False, "non-integer classid"])
 
     try:
-        conn = sqlite3.connect(database)
+        conn = sqlite3.connect(DATABASE)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -135,8 +143,8 @@ def reg_details():
         print(f"Database error: {e}", file=sys.stderr)
         return jsonify([False, "A server error occurred. "
                        "Please contact the system administrator."])
-    except Exception as e:
-        print(f"Unexpected error: {e}", file=sys.stderr)
+    except (ValueError, TypeError) as e:
+        print(f"Input error: {e}", file=sys.stderr)
         return jsonify([False, "A server error occurred. "
                        "Please contact the system administrator."])
 

@@ -81,7 +81,12 @@ def main():
 
         run_test(server_url, browser_process, '8321')
 
-        # Add more tests here.
+        # Add more comprehensive tests
+        run_test(server_url, browser_process, '7838')  # Different class
+        run_test(server_url, browser_process, '8308')  # Another class if exists
+        
+        # Test error handling would need manual testing
+        # as the assignment states automated testing of error handling isn't possible
 
 if __name__ == '__main__':
     main()

@@ -64,18 +64,42 @@ def main():
 
     serverurl = parse_args()
 
+    # Test regoverviews with various inputs
     request = '/regoverviews?dept=cos'
     run_test(serverurl, request)
 
     request = '/regoverviews?dept=COS&coursenum=2&area=qr&title=intro'
     run_test(serverurl, request)
 
-    # Add more tests here.
+    request = '/regoverviews?dept=&coursenum=&area=&title='
+    run_test(serverurl, request)
+    
+    request = '/regoverviews?dept=COS&coursenum=333'
+    run_test(serverurl, request)
+    
+    request = '/regoverviews?area=qr'
+    run_test(serverurl, request)
+    
+    request = '/regoverviews?title=programming'
+    run_test(serverurl, request)
+    
+    request = '/regoverviews?dept=NONEXISTENT'
+    run_test(serverurl, request)
 
     request = '/regdetails?classid=8321'
     run_test(serverurl, request)
 
-    # Add more tests here.
+    request = '/regdetails?classid=99999'  
+    run_test(serverurl, request)
+    
+    request = '/regdetails?classid=abc'    
+    run_test(serverurl, request)
+    
+    request = '/regdetails'                 
+    run_test(serverurl, request)
+    
+    request = '/regdetails?classid='        
+    run_test(serverurl, request)
 
 if __name__ == '__main__':
     main()

@@ -5,56 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar's Office Class Search</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px; 
+            padding-bottom: 60px; 
+        }
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+        }
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: #f8f9fa;
+            padding: 0.5rem 0;
+            border-top: 1px solid #dee2e6;
+        }
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .btn-classid {
+            background: none;
+            border: none;
+            color: #0d6efd;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 0;
+        }
+        .btn-classid:hover {
+            color: #0a58ca;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div>
-            <h1>Registrar's Office: Class Search</h1>
+    <header class="sticky-header">
+        <div class="container">
+            <h1 class="mb-0">Princeton University Registrar</h1>
         </div>
     </header>
 
-    <main>
-        <div>
-            <div>
-                <div>
-                    <label for="deptInput">Department:</label>
-                    <input type="text" id="deptInput" placeholder="Department">
+    <main class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label for="deptInput" class="form-label">Department:</label>
+                                <input type="text" id="deptInput" class="form-control" placeholder="e.g. COS">
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label for="coursenumInput" class="form-label">Number:</label>
+                                <input type="text" id="coursenumInput" class="form-control" placeholder="e.g. 333">
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label for="areaInput" class="form-label">Area:</label>
+                                <input type="text" id="areaInput" class="form-control" placeholder="e.g. qr">
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <label for="titleInput" class="form-label">Title:</label>
+                                <input type="text" id="titleInput" class="form-control" placeholder="e.g. Programming">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label for="coursenumInput">Number:</label>
-                    <input type="text" id="coursenumInput" placeholder="Number">
-                </div>
-                <div>
-                    <label for="areaInput">Area:</label>
-                    <input type="text" id="areaInput" placeholder="Area">
-                </div>
-                <div>
-                    <label for="titleInput">Title:</label>
-                    <input type="text" id="titleInput" placeholder="Title">
-                </div>
-            </div>
 
-            <div>
-                <table id="overviewsTable">
-                    <thead>
-                        <tr>
-                            <th><strong>ClassId</strong></th>
-                            <th><strong>Dept</strong></th>
-                            <th><strong>Num</strong></th>
-                            <th><strong>Area</strong></th>
-                            <th><strong>Title</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Class Search Results</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-container">
+                            <table id="overviewsTable" class="table table-striped table-hover mb-0">
+                                <thead class="table-dark sticky-top">
+                                    <tr>
+                                        <th>ClassId</th>
+                                        <th>Dept</th>
+                                        <th>Num</th>
+                                        <th>Area</th>
+                                        <th>Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <footer>
-        <div>
-            <p>Created by Ziya Momin and Nicole Deng.</p>
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small class="text-muted">Created by Ziya Momin and Nicole Deng</small>
+            </div>
         </div>
     </footer>
 
@@ -170,14 +226,14 @@
         }
 
         function displayOverviews(overviews) {
-            // Clear existing rows
             overviewsTable.innerHTML = '';
 
             if (overviews.length === 0) {
                 const row = overviewsTable.insertRow();
                 const cell = row.insertCell(0);
                 cell.colSpan = 5;
-                cell.textContent = 'No classes found.';
+                cell.className = 'text-center text-muted py-3';
+                cell.textContent = 'No classes found matching your criteria.';
                 return;
             }
 
@@ -192,6 +248,7 @@
                 // Create button for classid
                 const button = document.createElement('button');
                 button.id = 'button' + overview.classid;
+                button.className = 'btn-classid';
                 button.textContent = overview.classid;
                 button.onclick = function() {
                     getResultsDetails(overview.classid);
@@ -206,7 +263,6 @@
         }
 
         function getResultsDetails(classid) {
-            // Cancel any existing request
             cancelCurrentRequest();
 
             const url = '/regdetails?classid=' + encodeURIComponent(classid);
@@ -253,7 +309,6 @@
 
             classDetailsTable.innerHTML = '';
             courseDetailsTable.innerHTML = '';
-            // Populate class details table
             function addRow(tbody, label, value) {
                 const row = tbody.insertRow();
                 const labelCell = row.insertCell(0);
@@ -294,7 +349,6 @@
         }
 
         function debouncedFetchOverviews() {
-            // Clear existing timer
             if (debounceTimer) {
                 clearTimeout(debounceTimer);
             }

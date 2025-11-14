@@ -61,22 +61,22 @@ def run_test(server_url, browser_process, delay, input_values):
         if 'dept' in input_values:
             dept_input = page.locator('#deptInput')
             dept_input.fill(input_values['dept'])
-            time.sleep(delay) # Wait for the AJAX call to finish.
+            time.sleep(delay)
 
         if 'coursenum' in input_values:
             coursenum_input = page.locator('#coursenumInput')
             coursenum_input.fill(input_values['coursenum'])
-            time.sleep(delay) # Wait for the AJAX call to finish.
+            time.sleep(delay)
 
         if 'area' in input_values:
             area_input = page.locator('#areaInput')
             area_input.fill(input_values['area'])
-            time.sleep(delay) # Wait for the AJAX call to finish.
+            time.sleep(delay) 
 
         if 'title' in input_values:
             title_input = page.locator('#titleInput')
             title_input.fill(input_values['title'])
-            time.sleep(delay) # Wait for the AJAX call to finish.
+            time.sleep(delay) 
 
         overviews_table = page.locator('#overviewsTable')
         print_flush(overviews_table.inner_text())
@@ -103,7 +103,28 @@ def main():
             {'dept':'COS', 'coursenum':'2', 'area':'qr',
             'title':'intro'})
 
-        # Add more tests here.
+        run_test(server_url, browser_process, delay, {})  
+        
+        run_test(server_url, browser_process, delay,
+            {'dept':'COS', 'coursenum':'333'})
+            
+        run_test(server_url, browser_process, delay,
+            {'area':'qr'})
+            
+        run_test(server_url, browser_process, delay,
+            {'title':'programming'})
+            
+        run_test(server_url, browser_process, delay,
+            {'dept':'MATH'})
+            
+        run_test(server_url, browser_process, delay,
+            {'dept':'NONEXISTENT'})  
+            
+        run_test(server_url, browser_process, delay,
+            {'title':'introduction'})
+            
+        run_test(server_url, browser_process, delay,
+            {'dept':'AAS', 'area':'LA'})
 
 if __name__ == '__main__':
     main()

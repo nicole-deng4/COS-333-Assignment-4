@@ -66,16 +66,11 @@ def run_test(serverurl, request):
     except Exception as ex:
         print(sys.argv[0] + ': ' + str(ex), file=sys.stderr)
 
-#-----------------------------------------------------------------------
-
 def main():
     """
     Main function that runs comprehensive API tests.
     """
-
     serverurl = parse_args()
-
-    # Test regoverviews with various inputs
     request = '/regoverviews?dept=cos'
     run_test(serverurl, request)
 

@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 """
-Registrar Web Application
-A Flask web application for Princeton University's registrar system.
-Provides API endpoints for searching classes and getting class details.
+Implements a Flask web application for Princeton University's registrar system.
 """
 
 import sys
@@ -17,7 +15,12 @@ DATABASE = "reg.sqlite"
 
 
 def string_handler(s):
-    """Handle string input for SQL LIKE queries, escaping special chars."""
+    """
+    Processes string input for SQL LIKE queries by escaping special characters.
+    Converts empty/None strings to '%' wildcard and escapes SQL special
+    characters to treat them as literal characters rather than
+    wildcards.
+    """
     if not s or s.strip() == "":
         return "%"
     s = s.replace("\\", "\\\\")
@@ -29,13 +32,20 @@ def string_handler(s):
 @app.route("/")
 @app.route("/index")
 def index():
-    """Serve the main HTML page."""
+    """
+    Serve the main HTML page for the registrar application.
+    Returns Flask response object containing index.html
+    """
     return send_file("index.html")
 
 
 @app.route("/regoverviews")
 def reg_overviews():
-    """Handle requests for class overviews. Returns JSON."""
+    """
+    Handle API requests for class overview data, uses SQL
+    joins to combine data from database tables, and returns
+    a JSON response.
+    """
     dept = string_handler(request.args.get("dept", ""))
     coursenum = string_handler(request.args.get("coursenum", ""))
     area = string_handler(request.args.get("area", ""))
@@ -75,7 +85,10 @@ def reg_overviews():
 
 @app.route("/regdetails")
 def reg_details():
-    """Handle requests for class details. Returns JSON."""
+    """
+    Handle API requests for detailed class information andreturns
+    a JSON response. 
+    """
     classid = request.args.get("classid", "")
     if classid == "":
         return jsonify([False, "missing classid"])
@@ -150,7 +163,9 @@ def reg_details():
 
 
 def main():
-    """Parse command-line arguments and start the Flask server."""
+    """
+    Parse command-line arguments and starts the Flask server.
+    """
     parser = argparse.ArgumentParser(
         description="The registrar application")
     parser.add_argument(
@@ -158,7 +173,6 @@ def main():
         help="the port at which the server should listen")
     args = parser.parse_args()
     app.run(host="0.0.0.0", port=args.port, debug=False)
-
 
 if __name__ == "__main__":
     main()

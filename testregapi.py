@@ -2,8 +2,17 @@
 
 #-----------------------------------------------------------------------
 # testregapi.py
-# Author: Bob Dondero
+# Authors: Bob Dondero (original), Nicole Deng and Ziya Momin (modified)
 #-----------------------------------------------------------------------
+
+"""
+Test script for the Registrar API endpoints.
+
+This program tests the JSON API routes (/regoverviews and /regdetails)
+of the registrar application by making HTTP requests and validating
+the responses. It tests various input combinations and error conditions
+to ensure the API behaves correctly according to the specification.
+"""
 
 import sys
 import json
@@ -19,6 +28,12 @@ UNDERLINE = '-' * MAX_LINE_LENGTH
 #-----------------------------------------------------------------------
 
 def parse_args():
+    """
+    Parse command-line arguments for the test script.
+    
+    Returns:
+        str: The server URL to test against
+    """
 
     parser = argparse.ArgumentParser(
         description='Test the ability of the reg application to '
@@ -35,6 +50,13 @@ def parse_args():
 #-----------------------------------------------------------------------
 
 def run_test(serverurl, request):
+    """
+    Execute a single API test by making an HTTP request and printing results.
+    
+    Args:
+        serverurl (str): Base URL of the server to test
+        request (str): API endpoint and query parameters to test
+    """
 
     pp = pprint.PrettyPrinter(width=MAX_LINE_LENGTH, sort_dicts=True)
     sys.stdout.flush()
@@ -61,6 +83,13 @@ def run_test(serverurl, request):
 #-----------------------------------------------------------------------
 
 def main():
+    """
+    Main function that runs comprehensive API tests.
+    
+    Tests both /regoverviews and /regdetails endpoints with various
+    input combinations and error conditions including missing parameters,
+    invalid data types, and non-existent records.
+    """
 
     serverurl = parse_args()
 

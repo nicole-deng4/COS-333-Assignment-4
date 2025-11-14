@@ -1,7 +1,16 @@
 #-----------------------------------------------------------------------
 # testregoverviews.py
-# Author: Bob Dondero
+# Authors: Bob Dondero (original), Nicole Deng and Ziya Momin (modified)
 #-----------------------------------------------------------------------
+
+"""
+Browser automation test script for registrar class overviews functionality.
+
+This program uses Playwright to automate browser interactions and test
+the class search interface. It fills in search form fields and validates
+that the results table updates correctly via AJAX. The script includes
+a configurable delay to account for asynchronous AJAX requests.
+"""
 
 import sys
 import time
@@ -16,6 +25,15 @@ UNDERLINE = '-' * MAX_LINE_LENGTH
 #-----------------------------------------------------------------------
 
 def get_args():
+    """
+    Parse command-line arguments for the browser test.
+    
+    Returns:
+        tuple: (server_url, browser_type, delay_seconds)
+            server_url (str): URL of the application to test
+            browser_type (str): 'firefox' or 'chrome'
+            delay_seconds (int): Seconds to wait for AJAX completion
+    """
 
     parser = argparse.ArgumentParser(
         description='Test the ability of the reg application to '
@@ -42,6 +60,12 @@ def get_args():
 #-----------------------------------------------------------------------
 
 def print_flush(message):
+    """
+    Print a message and immediately flush stdout for real-time output.
+    
+    Args:
+        message (str): Message to print
+    """
 
     print(message)
     sys.stdout.flush()
@@ -49,6 +73,20 @@ def print_flush(message):
 #-----------------------------------------------------------------------
 
 def run_test(server_url, browser_process, delay, input_values):
+    """
+    Execute a single browser test with specified input values.
+    
+    Opens the registrar application, fills in the search form fields
+    with the provided values, waits for AJAX to complete, then captures
+    and prints the results table content.
+    
+    Args:
+        server_url (str): URL of the application to test
+        browser_process: Playwright browser instance
+        delay (int): Seconds to wait after each input for AJAX completion
+        input_values (dict): Form field values to enter
+            Keys: 'dept', 'coursenum', 'area', 'title'
+    """
 
     print_flush(UNDERLINE)
     for key, value in input_values.items():
@@ -87,6 +125,13 @@ def run_test(server_url, browser_process, delay, input_values):
 #-----------------------------------------------------------------------
 
 def main():
+    """
+    Main function that runs comprehensive browser tests for class overviews.
+    
+    Launches a browser, runs multiple test cases with different search
+    parameter combinations, and validates the search functionality works
+    correctly with AJAX updates.
+    """
 
     server_url, browser, delay = get_args()
 

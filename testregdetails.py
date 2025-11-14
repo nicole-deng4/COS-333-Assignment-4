@@ -1,15 +1,11 @@
 #-----------------------------------------------------------------------
 # testregdetails.py
-# Authors: Bob Dondero (original), Nicole Deng and Ziya Momin (modified)
+# Authors: Nicole Deng and Ziya Momin
 #-----------------------------------------------------------------------
 
 """
-Browser automation test script for registrar class details functionality.
-
-This program uses Playwright to test the modal dialog functionality
-that displays detailed class information. It clicks on class ID buttons
-in the search results and validates that the details modal appears
-with the correct information formatted in tables.
+Browser automation test script for registrar class details
+ functionality.
 """
 
 import sys
@@ -17,23 +13,14 @@ import time
 import argparse
 import playwright.sync_api
 
-#-----------------------------------------------------------------------
-
 MAX_LINE_LENGTH = 72
 UNDERLINE = '-' * MAX_LINE_LENGTH
 
-#-----------------------------------------------------------------------
-
 def get_args():
     """
-    Parse command-line arguments for the browser test.
-    
-    Returns:
-        tuple: (server_url, browser_type)
-            server_url (str): URL of the application to test
-            browser_type (str): 'firefox' or 'chrome'
+    Parse command-line arguments for the browser test and returns
+    a tuple with the server URL and browser type.
     """
-
     parser = argparse.ArgumentParser(
         description='Test the ability of the reg application to '
             + 'handle "primary" (class overviews) queries')
@@ -51,35 +38,17 @@ def get_args():
 
     return (args.serverURL, args.browser)
 
-#-----------------------------------------------------------------------
-
 def print_flush(message):
     """
-    Print a message and immediately flush stdout for real-time output.
-    
-    Args:
-        message (str): Message to print
+    Print a message and flush stdout for real-time output.
     """
-
     print(message)
     sys.stdout.flush()
 
-#-----------------------------------------------------------------------
-
 def run_test(server_url, browser_process, classid):
     """
-    Execute a single browser test for class details modal.
-    
-    Opens the registrar application, clicks on a specific class ID button
-    to trigger the details modal, then captures and prints the content
-    of both the class details and course details tables.
-    
-    Args:
-        server_url (str): URL of the application to test
-        browser_process: Playwright browser instance
-        classid (str): Class ID to click and test
+    Execute a single browser test for class details model.
     """
-
     print_flush(UNDERLINE)
 
     try:
@@ -101,16 +70,11 @@ def run_test(server_url, browser_process, classid):
         print(str(ex), file=sys.stderr)
 
 
-#-----------------------------------------------------------------------
-
 def main():
     """
-    Main function that runs browser tests for class details functionality.
-    
-    Launches a browser, tests multiple class IDs to ensure the modal
-    details functionality works correctly for different classes.
+    Main function that runs browser tests for class details
+    functionality.
     """
-
     server_url, browser = get_args()
 
     with playwright.sync_api.sync_playwright() as pw:

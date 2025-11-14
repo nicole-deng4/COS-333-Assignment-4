@@ -2,7 +2,7 @@
 
 #-----------------------------------------------------------------------
 # testregapi.py
-# Authors: Bob Dondero (original), Nicole Deng and Ziya Momin (modified)
+# Authors: Nicole Deng and Ziya Momin 
 #-----------------------------------------------------------------------
 
 """
@@ -20,21 +20,13 @@ import argparse
 import pprint
 import urllib.request
 
-#-----------------------------------------------------------------------
-
 MAX_LINE_LENGTH = 72
 UNDERLINE = '-' * MAX_LINE_LENGTH
 
-#-----------------------------------------------------------------------
-
 def parse_args():
     """
-    Parse command-line arguments for the test script.
-    
-    Returns:
-        str: The server URL to test against
+    Parses command-line arguments for the test script and returns the server URL.
     """
-
     parser = argparse.ArgumentParser(
         description='Test the ability of the reg application to '
             + 'handle requests for JSON documents')
@@ -47,15 +39,9 @@ def parse_args():
 
     return args.serverURL
 
-#-----------------------------------------------------------------------
-
 def run_test(serverurl, request):
     """
-    Execute a single API test by making an HTTP request and printing results.
-    
-    Args:
-        serverurl (str): Base URL of the server to test
-        request (str): API endpoint and query parameters to test
+    Executes a single API test by making an HTTP request and printing results.
     """
 
     pp = pprint.PrettyPrinter(width=MAX_LINE_LENGTH, sort_dicts=True)
@@ -85,10 +71,6 @@ def run_test(serverurl, request):
 def main():
     """
     Main function that runs comprehensive API tests.
-    
-    Tests both /regoverviews and /regdetails endpoints with various
-    input combinations and error conditions including missing parameters,
-    invalid data types, and non-existent records.
     """
 
     serverurl = parse_args()

@@ -1,22 +1,25 @@
 #-----------------------------------------------------------------------
-# testregoverviews.py
-# Author: Bob Dondero
+# testregoverviewsgiven.py
+# Authors: Nicole Deng and Ziya Momin
 #-----------------------------------------------------------------------
+
+"""
+Browser automation test script for registrar class overviews
+ functionality.
+"""
 
 import sys
 import time
 import argparse
 import playwright.sync_api
 
-#-----------------------------------------------------------------------
-
 MAX_LINE_LENGTH = 72
 UNDERLINE = '-' * MAX_LINE_LENGTH
 
-#-----------------------------------------------------------------------
-
 def get_args():
-
+    """
+    Parses command-line arguments for the browser test.
+    """
     parser = argparse.ArgumentParser(
         description='Test the ability of the reg application to '
             + 'handle "primary" (class overviews) queries')
@@ -39,16 +42,17 @@ def get_args():
 
     return (args.serverURL, args.browser, args.delay)
 
-#-----------------------------------------------------------------------
-
 def print_flush(message):
-
+    """
+    Prints a message and flushes stdout for real-time output.
+    """
     print(message)
     sys.stdout.flush()
 
-#-----------------------------------------------------------------------
-
 def run_test(server_url, browser_process, delay, input_values):
+    """
+    Executes a single browser test with specified input values.
+    """
 
     print_flush(UNDERLINE)
     for key, value in input_values.items():
@@ -84,10 +88,11 @@ def run_test(server_url, browser_process, delay, input_values):
     except Exception as ex:
         print(str(ex), file=sys.stderr)
 
-#-----------------------------------------------------------------------
-
 def main():
-
+    """
+    Main function that runs comprehensive browser tests for class
+    overviews.
+    """
     server_url, browser, delay = get_args()
 
     with playwright.sync_api.sync_playwright() as pw:

@@ -81,7 +81,8 @@ def main():
 
         run_test(server_url, browser_process, '8321')
 
-        # Add more tests here.
+        run_test(server_url, browser_process, '7838') 
+        run_test(server_url, browser_process, '8308')  
 
 if __name__ == '__main__':
     main()

@@ -7,46 +7,61 @@ describing your teammate's contribution. Please be thorough; we're
 looking for two substantial paragraphs, not a sentence or two. (If
 you worked alone, then you should skip this section.)
 
-[Enter detailed description of your contribution - include what you implemented,
-what challenges you solved, what testing you did, etc.]
+Similar to our approach in the other assignments, we used pair
+programming for this final assignment as well. Rather than dividing 
+the files and working independently, we collaborated side by side.
+While one person typed, the other reviewed their work in real time
+and acted as a logical sounding board for ideas and design choices.
 
-[Enter detailed description of your teammate's contribution - include what they implemented,
-what challenges they solved, what testing they did, etc.]
+Ziya focused on building the client-side functionality of the Registrar
+application by implementing the dynamic behavior of the SPA, writing
+the AJAX requests, and updating the results table. She also worked a
+lot with the front-end by designing the HTML and implementing the
+responsive UI using Bootstrap.
+
+Nicole focused on implementing the server-side Flask application,
+including the routes and database interactions for /regoverviews
+and /regdetails. She worked on the argument parsing and
+error-handling logic in runserver.py and included more comprehensive
+tests in the testing files. 
 
 A description of the help that you received from other people (other
 than the course instructors) while doing the assignment. Write "None"
 to indicate that you received no help from other people (other than
 the course instructors).
 
-[Enter your reply here - if you got help from classmates, TAs, online resources, etc.]
+None
 
 A description of the written sources of information (other than the
 lecture material) that you used while doing the assignment. Write
 "None" to indicate that you used no written sources of information
 (other than the lecture material).
 
-[Enter any documentation, Stack Overflow, MDN, Bootstrap docs, etc. you used]
+None
 
 A description of the help that you received from generative AI while
 doing the assignment. Write "None" to indicate that you received no
 help from generative AI.
 
-[Enter details about any ChatGPT, GitHub Copilot, or other AI assistance]
+None
 
 An indication of how much time you spent doing the assignment.
 
-[Enter total hours spent, e.g., "Approximately 15 hours total"]
+Approximately 10 hours
 
 Your assessment of the assignment: Did it help you to learn? What did
 it help you to learn? Do you have any suggestions for improvement? Etc.
 
-[Enter thoughtful assessment of the learning experience, what was helpful,
-what was challenging, suggestions for improvement, etc.]
+We found this assignment to be very helpful for understanding how a
+three tier web application fits together. Implementing the SPA
+behavior improved our understanding of asynchronous JavaScript
+and working with Bootstrap gave us practice with including good
+UI/UX design principles. Overall, the assignment provided a great
+experience in building a realistic modern web application
 
 (Optionally) Any information that will help us to grade your work in
 the most favorable light. In particular you must describe all known
 bugs.
 
-[Describe any known issues, limitations, or areas where you weren't
-able to fully complete the requirements]
+N/A
 

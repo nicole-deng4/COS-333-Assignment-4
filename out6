@@ -101,7 +101,6 @@ Call log:
        - element is not visible
      - retrying click action
        - waiting 500ms
-    - waiting for element to be visible, enabled and stable
 
 ------------------------------------------------------------------------
 Locator.click: Timeout 30000ms exceeded.
@@ -123,3 +122,47 @@ Call log:
        - waiting 500ms
 
 ------------------------------------------------------------------------
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for get_by_text("\n").first
+    - locator resolved to <h4 class="modal-title">Registrar's Office</h4>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+
+------------------------------------------------------------------------
+No link found for classid: |123456789012345678901234567890|
+------------------------------------------------------------------------
+No link found for classid: |!@#$%|
+------------------------------------------------------------------------
+No link found for classid: |ABC#123|
+------------------------------------------------------------------------
+No link found for classid: |123_456|
+------------------------------------------------------------------------
+No link found for classid: |class-8321|
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: | 8321|
+------------------------------------------------------------------------
+No link found for classid: |8321 |
+------------------------------------------------------------------------
+No link found for classid: | 8321 |
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: |8321|

@@ -86,8 +86,61 @@ def main():
 
         run_test(server_url, browser_process, '8321')
 
-        run_test(server_url, browser_process, '7838') 
-        run_test(server_url, browser_process, '8308')  
+        # normal class
+        run_test(server_url, browser_process, '8321')
+
+        
+        for classId in ['7842', '7850', '7865', '7872', '7873']:
+            run_test(server_url, browser_process, classId)
+
+        # no professors
+        for classId in ['7859', '7879', '7886', '7935', '8036']:
+            run_test(server_url, browser_process, classId)
+
+        # crosslisted courses
+        for classId in ['7838', '7839', '7840', '7841', '7842']:
+            run_test(server_url, browser_process, classId)
+
+        # long descriptions
+        for classId in ['7863', '8028', '8063', '8291', '8667']:
+            run_test(server_url, browser_process, classId)
+
+        # multiple crosslistings and professors
+        run_test(server_url, browser_process, '8361')
+
+        # empty or whitespace class IDs
+        for classId in ['', ' ', '   ', '\t', '\n']:
+            run_test(server_url, browser_process, classId)
+
+        # long class IDs
+        run_test(server_url, browser_process, '123456789012345678901234567890')
+
+        # special characters in class IDs
+        for classId in ['!@#$%', 'ABC#123', '123_456', 'class-8321']:
+            run_test(server_url, browser_process, classId)
+
+        # repeated queries
+        for i in range(3):
+            run_test(server_url, browser_process, '8321')
+
+        # bad input
+        for classId in [' 8321', '8321 ', ' 8321 ']:
+            run_test(server_url, browser_process, classId)
+
+        # missing database
+        if os.path.exists('reg.sqlite'):
+            shutil.copy('reg.sqlite', 'reg_backup.sqlite')
+            os.remove('reg.sqlite')  
+            run_test(server_url, browser_process, '8321')
+            shutil.copy('reg_backup.sqlite', 'reg.sqlite') 
+
+        # corrupted database
+        if os.path.exists('reg.sqlite'):
+            shutil.copy('reg.sqlite', 'reg_backup.sqlite')
+            with open('reg.sqlite', 'w') as f:
+                f.write('CORRUPTED DATA')
+            run_test(server_url, browser_process, '8321')
+            shutil.copy('reg_backup.sqlite', 'reg.sqlite')       
 
 if __name__ == '__main__':
     main()

@@ -3,18 +3,16 @@
 # Authors: Nicole Deng and Ziya Momin
 #-----------------------------------------------------------------------
 
-
 """
 Browser automation test script for registrar class details
  functionality.
 """
 
-import os
-import shutil
-
 import sys
 import time
 import argparse
+import os
+import shutil
 import playwright.sync_api
 
 MAX_LINE_LENGTH = 72
@@ -57,45 +55,54 @@ def run_test(server_url, browser_process, classid):
 
     try:
         page = browser_process.new_page()
+        
+        # Set up dialog handler to capture alerts
+        dialog_message = None
+        
+        def handle_dialog(dialog):
+            nonlocal dialog_message
+            dialog_message = dialog.message
+            dialog.accept()
+        
+        page.on("dialog", handle_dialog)
+        
         page.goto(server_url)
 
+        # Check if link exists for this classid
+        # For empty/whitespace classids, there may not be a link
+        link_locator = page.get_by_text(classid).first
+        link_count = link_locator.count()
+        
+        if link_count > 0:
+            link_locator.click()
+            
+            # Wait for either modal to appear (success) or dialog to appear (error)
+            # Try waiting for modal with timeout. Bootstrap 5 modals add 'show' class when visible
+            try:
+                # Wait for modal to become visible - check for 'show' class or visibility
+                page.wait_for_selector('#classDetailsModal.show', timeout=2000)
+                # Success case: modal opened, read the tables
+                page.wait_for_selector('#classDetailsTable')
+                class_details_table = page.locator('#classDetailsTable')
+                print_flush(class_details_table.inner_text())
 
-        # Try to find the classId link
-        link_locator = page.get_by_text(classid)
-        if not link_locator or link_locator.count() == 0:
-            error_msg = f"ERROR: No link found for classId '{classid}'"
-            print_flush(error_msg)
-            page.close()
-            raise Exception(error_msg)
-
-        link = link_locator.first
-        try:
-            link.click(timeout=5000)
-        except Exception as e:
-            error_msg = f"ERROR: Could not click link for classId '{classid}' (not visible or clickable): {e}"
-            print_flush(error_msg)
-            page.close()
-            raise
-
-        # Wait for the details table to be visible
-        try:
-            page.wait_for_selector('#classDetailsTable', timeout=5000, state='visible')
-            class_details_table = page.locator('#classDetailsTable')
-            print_flush(class_details_table.inner_text())
-        except Exception as e:
-            error_msg = f"ERROR: #classDetailsTable not visible for classId '{classid}': {e}"
-            print_flush(error_msg)
-            page.close()
-            raise
-
-        try:
-            page.wait_for_selector('#courseDetailsTable', timeout=5000, state='visible')
-            course_details_table = page.locator('#courseDetailsTable')
-            print_flush(course_details_table.inner_text())
-        except Exception as e:
-            error_msg = f"ERROR: #courseDetailsTable not visible for classId '{classid}': {e}"
-            print_flush(error_msg)
-            raise
+                page.wait_for_selector('#courseDetailsTable')
+                course_details_table = page.locator('#courseDetailsTable')
+                print_flush(course_details_table.inner_text())
+            except playwright.sync_api.TimeoutError:
+                # Modal didn't open - likely an error occurred
+                # Wait a bit for dialog to appear if it's slow
+                time.sleep(0.5)
+                if dialog_message:
+                    print_flush(f"Error: {dialog_message}")
+                else:
+                    # No modal and no dialog - unexpected state
+                    print_flush("No response received")
+        else:
+            # Link doesn't exist (e.g., empty/whitespace classid, invalid classid)
+            # For these cases, we can't click a link, so just note it
+            print_flush(f"No link found for classid: |{classid}|")
+        
         page.close()
 
     except Exception as ex:

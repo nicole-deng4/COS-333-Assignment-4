@@ -97,7 +97,7 @@
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <large class="text-white">Created by Ziya Momin and Nicole Deng</div>
+                <span class="text-white">Created by Ziya Momin and Nicole Deng</span>
             </div>
         </div>
     </footer>
@@ -107,7 +107,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="classDetailsModalLabel">Registrar's Office</h4>
-                    <button type="button" class="btn-close bg-red-600" label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <h2>Class Details</h2>
@@ -184,6 +184,9 @@
 
             xhr.open('GET', url, true);
             xhr.onload = function() {
+                if (xhr !== currentRequest) {
+                    return;
+                }
                 if (xhr.status === 200) {
                     try {
                         const response = JSON.parse(xhr.responseText);
@@ -198,16 +201,25 @@
                 } else {
                     alert('Error: Failed to fetch data from server');
                 }
-                currentRequest = null;
+                if (xhr === currentRequest) {
+                    currentRequest = null;
+                }
             };
 
             xhr.onerror = function() {
+                if (xhr !== currentRequest) {
+                    return;
+                }
                 alert('Error: Failed to fetch data from server');
-                currentRequest = null;
+                if (xhr === currentRequest) {
+                    currentRequest = null;
+                }
             };
 
             xhr.onabort = function() {
-                currentRequest = null;
+                if (xhr === currentRequest) {
+                    currentRequest = null;
+                }
             };
 
             xhr.send();
@@ -216,103 +228,28 @@
         function displayOverviews(overviews) {
             overviewsTable.innerHTML = '';
 
-            if (overviews.length === 0) {
-                let currentRequest = null;
-                let debounceTimer = null;
+            for (let i = 0; i < overviews.length; i++) {
+                const row = overviewsTable.insertRow();
+                const classidCell = row.insertCell(0);
+                const deptCell = row.insertCell(1);
+                const coursenumCell = row.insertCell(2);
+                const areaCell = row.insertCell(3);
+                const titleCell = row.insertCell(4);
 
-                const deptInput = document.getElementById('deptInput');
-                const coursenumInput = document.getElementById('coursenumInput');
-                const areaInput = document.getElementById('areaInput');
-                const titleInput = document.getElementById('titleInput');
-                const overviewsTable = document.getElementById('overviewsTable').getElementsByTagName('tbody')[0];
-
-                // Cancel any ongoing AJAX request before starting a new one
-                function cancelCurrentRequest() {
-                    if (currentRequest) {
-                        try { currentRequest.abort(); } catch (e) {}
-                        currentRequest = null;
-                    }
-                }
-
-                // Debounce AJAX calls at 0.5s
-                function debouncedFetchOverviews() {
-                    if (debounceTimer) {
-                        clearTimeout(debounceTimer);
-                    }
-                    debounceTimer = setTimeout(fetchOverviews, 500);
-                }
-
-                // Fetch and update results area dynamically as user types
-                function fetchOverviews() {
-                    cancelCurrentRequest();
-
-                    const dept = deptInput.value.trim();
-                    const coursenum = coursenumInput.value.trim();
-                    const area = areaInput.value.trim();
-                    const title = titleInput.value.trim();
-
-                    let url = '/regoverviews?';
-                    let first = true;
-                    if (dept) {
-                        url += (first ? '' : '&') + 'dept=' + encodeURIComponent(dept);
-                        first = false;
-                    }
-                    if (coursenum) {
-                        url += (first ? '' : '&') + 'coursenum=' + encodeURIComponent(coursenum);
-                        first = false;
-                    }
-                    if (area) {
-                        url += (first ? '' : '&') + 'area=' + encodeURIComponent(area);
-                        first = false;
-                    }
-                    if (title) {
-                        url += (first ? '' : '&') + 'title=' + encodeURIComponent(title);
-                        first = false;
-                    }
-
-                    const xhr = new XMLHttpRequest();
-                    currentRequest = xhr;
-
-                    xhr.open('GET', url, true);
-                    xhr.onload = function() {
-                        if (xhr.status === 200) {
-                            try {
-                                const response = JSON.parse(xhr.responseText);
-                                if (response[0] === true) {
-                                    displayOverviews(response[1]);
-                                } else {
-                                    alert('Error: ' + response[1]);
-                                }
-                            } catch (e) {
-                                alert('Error: Failed to parse response from server');
-                            }
-                        } else {
-                            alert('Error: Failed to fetch data from server');
-                        }
-                        currentRequest = null;
-                    };
-
-                    xhr.onerror = function() {
-                        alert('Error: Failed to fetch data from server');
-                        currentRequest = null;
-                    };
-
-                    xhr.onabort = function() {
-                        currentRequest = null;
-                    };
-
-                    xhr.send();
-                }
-
-                deptInput.addEventListener('input', debouncedFetchOverviews);
-                coursenumInput.addEventListener('input', debouncedFetchOverviews);
-                areaInput.addEventListener('input', debouncedFetchOverviews);
-                titleInput.addEventListener('input', debouncedFetchOverviews);
-
-                window.addEventListener('load', function() {
-                    fetchOverviews();
-                });
-            addRow(courseDetailsTable, 'Error', errorMessage);
+                const classid = overviews[i].classid;
+                const button = document.createElement('button');
+                button.id = 'button' + classid;
+                button.className = 'btn-classid';
+                button.textContent = classid;
+                button.onclick = function() {
+                    getResultsDetails(classid);
+                };
+                classidCell.appendChild(button);
+                deptCell.textContent = overviews[i].dept;
+                coursenumCell.textContent = overviews[i].coursenum;
+                areaCell.textContent = overviews[i].area || '';
+                titleCell.textContent = overviews[i].title || '';
+            }
         }
 
         function displayDetails(details) {
@@ -375,6 +312,33 @@
         coursenumInput.addEventListener('input', debouncedFetchOverviews);
         areaInput.addEventListener('input', debouncedFetchOverviews);
         titleInput.addEventListener('input', debouncedFetchOverviews);
+
+        function getResultsDetails(classid) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/regdetails?classid=' + encodeURIComponent(classid), true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response[0] === true) {
+                            displayDetails(response[1]);
+                            const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
+                            modal.show();
+                        } else {
+                            alert('Error: ' + response[1]);
+                        }
+                    } catch (e) {
+                        alert('Error: Failed to parse response from server');
+                    }
+                } else {
+                    alert('Error: Failed to fetch data from server');
+                }
+            };
+            xhr.onerror = function() {
+                alert('Error: Failed to fetch data from server');
+            };
+            xhr.send();
+        }
 
         window.addEventListener('load', function() {
             fetchOverviews();

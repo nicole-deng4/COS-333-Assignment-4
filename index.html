@@ -265,22 +265,28 @@
                         const response = JSON.parse(xhr.responseText);
                         if (response[0] === true) {
                             displayDetails(response[1]);
-                            const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
-                            modal.show();
                         } else {
-                            alert('Error: ' + response[1]);
+                            displayError(response[1]);
                         }
+                        const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
+                        modal.show();
                     } catch (e) {
-                        alert('Error: Failed to parse response from server');
+                        displayError('Failed to parse response from server');
+                        const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
+                        modal.show();
                     }
                 } else {
-                    alert('Error: Failed to fetch data from server');
+                    displayError('Failed to fetch data from server');
+                    const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
+                    modal.show();
                 }
                 currentRequest = null;
             };
 
             xhr.onerror = function() {
-                alert('Error: Failed to fetch data from server');
+                displayError('Failed to fetch data from server');
+                const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
+                modal.show();
                 currentRequest = null;
             };
 
@@ -289,6 +295,25 @@
             };
 
             xhr.send();
+        }
+
+        function displayError(errorMessage) {
+            const classDetailsTable = document.querySelector('#classDetailsTable tbody');
+            const courseDetailsTable = document.querySelector('#courseDetailsTable tbody');
+
+            classDetailsTable.innerHTML = '';
+            courseDetailsTable.innerHTML = '';
+            
+            function addRow(tbody, label, value) {
+                const row = tbody.insertRow();
+                const labelCell = row.insertCell(0);
+                const valueCell = row.insertCell(1);
+                labelCell.innerHTML = '<strong>' + label + '</strong>';
+                valueCell.textContent = value || '';
+            }
+
+            addRow(classDetailsTable, 'Error', errorMessage);
+            addRow(courseDetailsTable, 'Error', errorMessage);
         }
 
         function displayDetails(details) {

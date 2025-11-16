@@ -16,9 +16,9 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background-color: #00008B;
+            background-color: #295078;
             color: white;
-            padding: 1rem 0;
+            
         }
         .sticky-footer {
             position: fixed;
@@ -50,7 +50,31 @@
 <body>
     <header class="sticky-header">
         <div class="container">
-            <h1 class="text-center mb-0">Registrar's Office Class Search</h1>
+            <h1 class="text-center">Registrar's Office: Class Search</h1>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <input type="text" id="deptInput" class="form-control" placeholder="Department">
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <input type="text" id="coursenumInput" class="form-control" placeholder="Number">
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <input type="text" id="areaInput" class="form-control" placeholder="Area">
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <input type="text" id="titleInput" class="form-control" placeholder="Title">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -61,20 +85,16 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-lg-3 col-md-6 col-12">
-                                <label for="deptInput" class="form-label">Department:</label>
-                                <input type="text" id="deptInput" class="form-control" placeholder="e.g. COS">
+                                <input type="text" id="deptInput" class="form-control" placeholder="Department">
                             </div>
                             <div class="col-lg-3 col-md-6 col-12">
-                                <label for="coursenumInput" class="form-label">Number:</label>
-                                <input type="text" id="coursenumInput" class="form-control" placeholder="e.g. 333">
+                                <input type="text" id="coursenumInput" class="form-control" placeholder="Number">
                             </div>
                             <div class="col-lg-3 col-md-6 col-12">
-                                <label for="areaInput" class="form-label">Area:</label>
-                                <input type="text" id="areaInput" class="form-control" placeholder="e.g. qr">
+                                <input type="text" id="areaInput" class="form-control" placeholder="Area">
                             </div>
                             <div class="col-lg-3 col-md-6 col-12">
-                                <label for="titleInput" class="form-label">Title:</label>
-                                <input type="text" id="titleInput" class="form-control" placeholder="e.g. Programming">
+                                <input type="text" id="titleInput" class="form-control" placeholder="Title">
                             </div>
                         </div>
                     </div>

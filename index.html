@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            padding-top: 80px; 
-            padding-bottom: 60px; 
+            padding:0;
+            margin:0;
         }
         .sticky-header {
             position: fixed;
@@ -18,141 +18,109 @@
             z-index: 1000;
             background-color: #295078;
             color: white;
-            
         }
+
         .sticky-footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            background-color: #f8f9fa;
-            padding: 0.5rem 0;
-            border-top: 1px solid #dee2e6;
+            background-color: #295078;
+            color: white;
+            font-size: 1em;
         }
         .table-container {
-            max-height: 400px;
             overflow-y: auto;
+            width: 100%;
+            padding: 10px; 
+            margin: 0;
         }
         .btn-classid {
-            background: none;
-            border: none;
-            color: #0d6efd;
-            text-decoration: underline;
+            background: #f2f2f2;
+            border: 2px solid black;
+            color: black;
+            text-decoration: none;
             cursor: pointer;
-            padding: 0;
+            padding: 2px 8px;
+            border-radius: 0;
         }
-        .btn-classid:hover {
-            color: #0a58ca;
-        }
+
     </style>
 </head>
 <body>
-    <header class="sticky-header">
-        <div class="container">
-            <h1 class="text-center">Registrar's Office: Class Search</h1>
-            <div class="container mt-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-lg-3 col-md-6 col-12">
-                                        <input type="text" id="deptInput" class="form-control" placeholder="Department">
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-12">
-                                        <input type="text" id="coursenumInput" class="form-control" placeholder="Number">
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-12">
-                                        <input type="text" id="areaInput" class="form-control" placeholder="Area">
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-12">
-                                        <input type="text" id="titleInput" class="form-control" placeholder="Title">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+    <header class="sticky-header p-12">
+        <div class = "search-bar">
+            <div class="container-fluid">
+                <h1 class="text-center">Registrar's Office: Class Search</h1>
+                <div class="row mb-4">
+                    <div class= "col-md-3 col-12">
+                        <input type="text" id="deptInput" class="form-control" placeholder="Department">
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <input type="text" id="coursenumInput" class="form-control" placeholder="Number">
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <input type="text" id="areaInput" class="form-control" placeholder="Area">
+                    </div>
+                    <div class="col-md-3 col-12">
+                        <input type="text" id="titleInput" class="form-control" placeholder="Title">
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="container mt-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-lg-3 col-md-6 col-12">
-                                <input type="text" id="deptInput" class="form-control" placeholder="Department">
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-12">
-                                <input type="text" id="coursenumInput" class="form-control" placeholder="Number">
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-12">
-                                <input type="text" id="areaInput" class="form-control" placeholder="Area">
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-12">
-                                <input type="text" id="titleInput" class="form-control" placeholder="Title">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Class Search Results</h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-container">
-                            <table id="overviewsTable" class="table table-striped table-hover mb-0">
-                                <thead class="table-dark sticky-top">
-                                    <tr>
-                                        <th>ClassId</th>
-                                        <th>Dept</th>
-                                        <th>Num</th>
-                                        <th>Area</th>
-                                        <th>Title</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    <div style="padding-top: 105px; padding-bottom: 70px;">
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-container">
+                    <table id="overviewsTable" class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>ClassId</th>
+                                <th>Dept</th>
+                                <th>Num</th>
+                                <th>Area</th>
+                                <th>Title</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <footer class="sticky-footer">
         <div class="container">
             <div class="text-center">
-                <small class="text-muted">Created by Ziya Momin and Nicole Deng</small>
+                <large class="text-white">Created by Ziya Momin and Nicole Deng</div>
             </div>
         </div>
     </footer>
 
     <div class="modal fade" id="classDetailsModal" tabindex="-1" aria-labelledby="classDetailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="classDetailsModalLabel">Class Details</h5>
+                    <h4 class="modal-title" id="classDetailsModalLabel">Registrar's Office</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h6>Class Details</h6>
-                    <div class="table-responsive mb-4">
-                        <table class="table table-bordered" id="classDetailsTable">
+                    <h2>Class Details</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="classDetailsTable">
                             <tbody>
                             </tbody>
                         </table>
                     </div>
 
-                    <h6>Course Details</h6>
+                    <h2>Course Details</h2>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="courseDetailsTable">
+                        <table class="table table-striped" id="courseDetailsTable">
                             <tbody>
                             </tbody>
                         </table>

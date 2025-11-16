@@ -217,102 +217,101 @@
             overviewsTable.innerHTML = '';
 
             if (overviews.length === 0) {
-                const row = overviewsTable.insertRow();
-                const cell = row.insertCell(0);
-                cell.colSpan = 5;
-                cell.className = 'text-center text-muted py-3';
-                cell.textContent = 'No classes found matching your criteria.';
-                return;
-            }
+                let currentRequest = null;
+                let debounceTimer = null;
 
-            overviews.forEach(function(overview) {
-                const row = overviewsTable.insertRow();
-                const classidCell = row.insertCell(0);
-                const deptCell = row.insertCell(1);
-                const coursenumCell = row.insertCell(2);
-                const areaCell = row.insertCell(3);
-                const titleCell = row.insertCell(4);
+                const deptInput = document.getElementById('deptInput');
+                const coursenumInput = document.getElementById('coursenumInput');
+                const areaInput = document.getElementById('areaInput');
+                const titleInput = document.getElementById('titleInput');
+                const overviewsTable = document.getElementById('overviewsTable').getElementsByTagName('tbody')[0];
 
-                // Create button for classid
-                const button = document.createElement('button');
-                button.id = 'button' + overview.classid;
-                button.className = 'btn-classid';
-                button.textContent = overview.classid;
-                button.onclick = function() {
-                    getResultsDetails(overview.classid);
-                };
-                classidCell.appendChild(button);
-
-                deptCell.textContent = overview.dept || '';
-                coursenumCell.textContent = overview.coursenum || '';
-                areaCell.textContent = overview.area || '';
-                titleCell.textContent = overview.title || '';
-            });
-        }
-
-        function getResultsDetails(classid) {
-            cancelCurrentRequest();
-
-            const url = '/regdetails?classid=' + encodeURIComponent(classid);
-
-            const xhr = new XMLHttpRequest();
-            currentRequest = xhr;
-
-            xhr.open('GET', url, true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    try {
-                        const response = JSON.parse(xhr.responseText);
-                        if (response[0] === true) {
-                            displayDetails(response[1]);
-                        } else {
-                            displayError(response[1]);
-                        }
-                        const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
-                        modal.show();
-                    } catch (e) {
-                        displayError('Failed to parse response from server');
-                        const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
-                        modal.show();
+                // Cancel any ongoing AJAX request before starting a new one
+                function cancelCurrentRequest() {
+                    if (currentRequest) {
+                        try { currentRequest.abort(); } catch (e) {}
+                        currentRequest = null;
                     }
-                } else {
-                    displayError('Failed to fetch data from server');
-                    const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
-                    modal.show();
                 }
-                currentRequest = null;
-            };
 
-            xhr.onerror = function() {
-                displayError('Failed to fetch data from server');
-                const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
-                modal.show();
-                currentRequest = null;
-            };
+                // Debounce AJAX calls at 0.5s
+                function debouncedFetchOverviews() {
+                    if (debounceTimer) {
+                        clearTimeout(debounceTimer);
+                    }
+                    debounceTimer = setTimeout(fetchOverviews, 500);
+                }
 
-            xhr.onabort = function() {
-                currentRequest = null;
-            };
+                // Fetch and update results area dynamically as user types
+                function fetchOverviews() {
+                    cancelCurrentRequest();
 
-            xhr.send();
-        }
+                    const dept = deptInput.value.trim();
+                    const coursenum = coursenumInput.value.trim();
+                    const area = areaInput.value.trim();
+                    const title = titleInput.value.trim();
 
-        function displayError(errorMessage) {
-            const classDetailsTable = document.querySelector('#classDetailsTable tbody');
-            const courseDetailsTable = document.querySelector('#courseDetailsTable tbody');
+                    let url = '/regoverviews?';
+                    let first = true;
+                    if (dept) {
+                        url += (first ? '' : '&') + 'dept=' + encodeURIComponent(dept);
+                        first = false;
+                    }
+                    if (coursenum) {
+                        url += (first ? '' : '&') + 'coursenum=' + encodeURIComponent(coursenum);
+                        first = false;
+                    }
+                    if (area) {
+                        url += (first ? '' : '&') + 'area=' + encodeURIComponent(area);
+                        first = false;
+                    }
+                    if (title) {
+                        url += (first ? '' : '&') + 'title=' + encodeURIComponent(title);
+                        first = false;
+                    }
 
-            classDetailsTable.innerHTML = '';
-            courseDetailsTable.innerHTML = '';
-            
-            function addRow(tbody, label, value) {
-                const row = tbody.insertRow();
-                const labelCell = row.insertCell(0);
-                const valueCell = row.insertCell(1);
-                labelCell.innerHTML = '<strong>' + label + '</strong>';
-                valueCell.textContent = value || '';
-            }
+                    const xhr = new XMLHttpRequest();
+                    currentRequest = xhr;
 
-            addRow(classDetailsTable, 'Error', errorMessage);
+                    xhr.open('GET', url, true);
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                if (response[0] === true) {
+                                    displayOverviews(response[1]);
+                                } else {
+                                    alert('Error: ' + response[1]);
+                                }
+                            } catch (e) {
+                                alert('Error: Failed to parse response from server');
+                            }
+                        } else {
+                            alert('Error: Failed to fetch data from server');
+                        }
+                        currentRequest = null;
+                    };
+
+                    xhr.onerror = function() {
+                        alert('Error: Failed to fetch data from server');
+                        currentRequest = null;
+                    };
+
+                    xhr.onabort = function() {
+                        currentRequest = null;
+                    };
+
+                    xhr.send();
+                }
+
+                deptInput.addEventListener('input', debouncedFetchOverviews);
+                coursenumInput.addEventListener('input', debouncedFetchOverviews);
+                areaInput.addEventListener('input', debouncedFetchOverviews);
+                titleInput.addEventListener('input', debouncedFetchOverviews);
+
+                window.addEventListener('load', function() {
+                    fetchOverviews();
+                });
             addRow(courseDetailsTable, 'Error', errorMessage);
         }
 

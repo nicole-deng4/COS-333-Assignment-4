@@ -3,10 +3,14 @@
 # Authors: Nicole Deng and Ziya Momin
 #-----------------------------------------------------------------------
 
+
 """
 Browser automation test script for registrar class details
  functionality.
 """
+
+import os
+import shutil
 
 import sys
 import time
@@ -55,16 +59,44 @@ def run_test(server_url, browser_process, classid):
         page = browser_process.new_page()
         page.goto(server_url)
 
-        link = page.get_by_text(classid).first
-        link.click()
 
-        page.wait_for_selector('#classDetailsTable')
-        class_details_table = page.locator('#classDetailsTable')
-        print_flush(class_details_table.inner_text())
+        # Try to find the classId link
+        link_locator = page.get_by_text(classid)
+        if not link_locator or link_locator.count() == 0:
+            error_msg = f"ERROR: No link found for classId '{classid}'"
+            print_flush(error_msg)
+            page.close()
+            raise Exception(error_msg)
 
-        page.wait_for_selector('#courseDetailsTable')
-        course_details_table = page.locator('#courseDetailsTable')
-        print_flush(course_details_table.inner_text())
+        link = link_locator.first
+        try:
+            link.click(timeout=5000)
+        except Exception as e:
+            error_msg = f"ERROR: Could not click link for classId '{classid}' (not visible or clickable): {e}"
+            print_flush(error_msg)
+            page.close()
+            raise
+
+        # Wait for the details table to be visible
+        try:
+            page.wait_for_selector('#classDetailsTable', timeout=5000, state='visible')
+            class_details_table = page.locator('#classDetailsTable')
+            print_flush(class_details_table.inner_text())
+        except Exception as e:
+            error_msg = f"ERROR: #classDetailsTable not visible for classId '{classid}': {e}"
+            print_flush(error_msg)
+            page.close()
+            raise
+
+        try:
+            page.wait_for_selector('#courseDetailsTable', timeout=5000, state='visible')
+            course_details_table = page.locator('#courseDetailsTable')
+            print_flush(course_details_table.inner_text())
+        except Exception as e:
+            error_msg = f"ERROR: #courseDetailsTable not visible for classId '{classid}': {e}"
+            print_flush(error_msg)
+            raise
+        page.close()
 
     except Exception as ex:
         print(str(ex), file=sys.stderr)

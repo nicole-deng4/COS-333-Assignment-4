@@ -17,13 +17,11 @@
             background-color: #295078;
             color: white;
         }
-
         .footer {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
             background-color: #295078;
             color: white;
             font-size: 1em;
@@ -38,12 +36,13 @@
             background: #f2f2f2;
             border: 2px solid black;
             color: black;
-            text-decoration: none;
             cursor: pointer;
-            padding: 2px 8px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-left: 8px;
+            padding-right: 8px;
             border-radius: 0;
         }
-
     </style>
 </head>
 <body>
@@ -70,7 +69,7 @@
         </div>
     </header>
 
-    <div style="padding-top: 105px; padding-bottom: 70px;">
+    <div style="padding-top: 120px; padding-bottom: 70px;">
         <div class="card">
             <div class="card-body p-0">
                 <div class="table-container">
@@ -177,17 +176,17 @@
                 first = false;
             }
 
-            const xhr = new XMLHttpRequest();
-            currentRequest = xhr;
+            const req = new XMLHttpRequest();
+            currentRequest = req;
 
-            xhr.open('GET', url, true);
-            xhr.onload = function() {
-                if (xhr !== currentRequest) {
+            req.open('GET', url, true);
+            req.onload = function() {
+                if (req !== currentRequest) {
                     return;
                 }
-                if (xhr.status === 200) {
+                if (req.status === 200) {
                     try {
-                        const response = JSON.parse(xhr.responseText);
+                        const response = JSON.parse(req.responseText);
                         if (response[0] === true) {
                             displayOverviews(response[1]);
                         } else {
@@ -199,28 +198,28 @@
                 } else {
                     alert('Error: Failed to fetch data from server');
                 }
-                if (xhr === currentRequest) {
+                if (req === currentRequest) {
                     currentRequest = null;
                 }
             };
 
-            xhr.onerror = function() {
-                if (xhr !== currentRequest) {
+            req.onerror = function() {
+                if (req !== currentRequest) {
                     return;
                 }
                 alert('Error: Failed to fetch data from server');
-                if (xhr === currentRequest) {
+                if (req === currentRequest) {
                     currentRequest = null;
                 }
             };
 
-            xhr.onabort = function() {
-                if (xhr === currentRequest) {
+            req.onabort = function() {
+                if (req === currentRequest) {
                     currentRequest = null;
                 }
             };
 
-            xhr.send();
+            req.send();
         }
 
         function displayOverviews(overviews) {
@@ -312,12 +311,12 @@
         titleInput.addEventListener('input', debouncedFetchOverviews);
 
         function getResultsDetails(classid) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', '/regdetails?classid=' + encodeURIComponent(classid), true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
+            const req = new XMLHttpRequest();
+            req.open('GET', '/regdetails?classid=' + encodeURIComponent(classid), true);
+            req.onload = function() {
+                if (req.status === 200) {
                     try {
-                        const response = JSON.parse(xhr.responseText);
+                        const response = JSON.parse(req.responseText);
                         if (response[0] === true) {
                             displayDetails(response[1]);
                             const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
@@ -332,10 +331,10 @@
                     alert('Error: Failed to fetch data from server');
                 }
             };
-            xhr.onerror = function() {
+            req.onerror = function() {
                 alert('Error: Failed to fetch data from server');
             };
-            xhr.send();
+            req.send();
         }
 
         window.addEventListener('load', function() {

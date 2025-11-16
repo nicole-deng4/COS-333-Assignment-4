@@ -1,17 +1,5 @@
 ------------------------------------------------------------------------
-Class Id	8321
-Days	TTh
-Start time	11:00 AM
-End time	12:20 PM
-Building	FRIEN
-Room	006
-Course Id	3672
-Dept and Number	COS 333
-Area	
-Title	Advanced C%Science Programming Techniques
-Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
-Prerequisites	COS 217 and COS 226.
-Professor	Brian W. Kernighan
+No link found for classid: |8321|
 ------------------------------------------------------------------------
 Class Id	8321
 Days	TTh
@@ -241,35 +229,9 @@ Description	What does a black burlesque star have to do with the making of Euro-
 Prerequisites	
 Professor	Anne A. Cheng
 ------------------------------------------------------------------------
-Class Id	7842
-Days	TTh
-Start time	12:30 PM
-End time	01:20 PM
-Building	ARCHB
-Room	N101
-Course Id	3461
-Dept and Number	AAS 348
-Dept and Number	ENG 348
-Area	LA
-Title	Black Popular Music Culture
-Description	An introduction to major historical, theoretical, performative, and aesthetic movements and trends in black popular music culture from the 19th century through the present day.
-Prerequisites	
-Professor	Daphne A. Brooks
-Imani Perry
+No link found for classid: |7842|
 ------------------------------------------------------------------------
-Class Id	7863
-Days	T
-Start time	01:30 PM
-End time	04:20 PM
-Building	BURRH
-Room	209
-Course Id	3468
-Dept and Number	AFS 302
-Area	SA
-Title	Local Governance and Development in Africa
-Description	Decentralization is widely advocated as a means of enhancing the quality of governance, improving the quality of service delivery, and achieving a variety of related socio-economic development objectives. However, reforms across Africa have often failed to achieve the desired objectives. The course seeks to explain this paradox and to explore the multiple forms of local governance in Africa. We will analyze empirical examples from across the African continent as well as case studies from other regions for comparative perspective, to assess the potential of decentralization reforms and community-driven development projects to improve outcomes.
-Prerequisites	
-Professor	Rachel B. Riedl
+No link found for classid: |7863|
 ------------------------------------------------------------------------
 Class Id	8028
 Days	TTh
@@ -343,65 +305,110 @@ Description	A studio course introducing students to American dance aesthetics an
 Prerequisites	Some form of social dancing, good, natural movement aptitude, or former dance training. This is an OPEN ENROLLMENT course.
 Professor	Dyane Harvey Salaam
 ------------------------------------------------------------------------
-Page.wait_for_selector: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("#classDetailsTable") to be visible
-    64 × locator resolved to hidden <table id="classDetailsTable" class="table table-striped">…</table>
-
+No response received
 ------------------------------------------------------------------------
-Page.wait_for_selector: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("#classDetailsTable") to be visible
-    63 × locator resolved to hidden <table id="classDetailsTable" class="table table-striped">…</table>
-
+No response received
 ------------------------------------------------------------------------
-Page.wait_for_selector: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("#classDetailsTable") to be visible
-    63 × locator resolved to hidden <table id="classDetailsTable" class="table table-striped">…</table>
-
+No response received
 ------------------------------------------------------------------------
-Page.wait_for_selector: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("#classDetailsTable") to be visible
-    63 × locator resolved to hidden <table id="classDetailsTable" class="table table-striped">…</table>
-
+No response received
 ------------------------------------------------------------------------
-Page.wait_for_selector: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("#classDetailsTable") to be visible
-    63 × locator resolved to hidden <table id="classDetailsTable" class="table table-striped">…</table>
-
+No response received
 ------------------------------------------------------------------------
-Locator.click: Timeout 30000ms exceeded.
-Call log:
-  - waiting for get_by_text("123456789012345678901234567890").first
-
+No link found for classid: |123456789012345678901234567890|
 ------------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/Users/Owner/COS-333-Assignment-4/testregdetails.py", line 146, in <module>
-    main()
-  File "/Users/Owner/COS-333-Assignment-4/testregdetails.py", line 120, in main
-    run_test(server_url, browser_process, classId)
-  File "/Users/Owner/COS-333-Assignment-4/testregdetails.py", line 59, in run_test
-    link.click()
-  File "/opt/anaconda3/lib/python3.11/site-packages/playwright/sync_api/_generated.py", line 15543, in click
-    self._sync(
-  File "/opt/anaconda3/lib/python3.11/site-packages/playwright/_impl/_sync_base.py", line 113, in _sync
-    self._dispatcher_fiber.switch()
-  File "/opt/anaconda3/lib/python3.11/site-packages/playwright/sync_api/_context_manager.py", line 56, in greenlet_main
-    self._loop.run_until_complete(self._connection.run_as_sync())
-  File "/opt/anaconda3/lib/python3.11/asyncio/base_events.py", line 641, in run_until_complete
-    self.run_forever()
-  File "/opt/anaconda3/lib/python3.11/asyncio/base_events.py", line 608, in run_forever
-    self._run_once()
-  File "/opt/anaconda3/lib/python3.11/asyncio/base_events.py", line 1898, in _run_once
-    event_list = self._selector.select(timeout)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.11/selectors.py", line 566, in select
-    kev_list = self._selector.control(None, max_ev, timeout)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-Future exception was never retrieved
-future: <Future finished exception=TargetClosedError('Target page, context or browser has been closed')>
-playwright._impl._errors.TargetClosedError: Target page, context or browser has been closed
+No link found for classid: |!@#$%|
+------------------------------------------------------------------------
+No link found for classid: |ABC#123|
+------------------------------------------------------------------------
+No link found for classid: |123_456|
+------------------------------------------------------------------------
+No link found for classid: |class-8321|
+------------------------------------------------------------------------
+Class Id	8321
+Days	TTh
+Start time	11:00 AM
+End time	12:20 PM
+Building	FRIEN
+Room	006
+Course Id	3672
+Dept and Number	COS 333
+Area	
+Title	Advanced C%Science Programming Techniques
+Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
+Prerequisites	COS 217 and COS 226.
+Professor	Brian W. Kernighan
+------------------------------------------------------------------------
+Class Id	8321
+Days	TTh
+Start time	11:00 AM
+End time	12:20 PM
+Building	FRIEN
+Room	006
+Course Id	3672
+Dept and Number	COS 333
+Area	
+Title	Advanced C%Science Programming Techniques
+Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
+Prerequisites	COS 217 and COS 226.
+Professor	Brian W. Kernighan
+------------------------------------------------------------------------
+Class Id	8321
+Days	TTh
+Start time	11:00 AM
+End time	12:20 PM
+Building	FRIEN
+Room	006
+Course Id	3672
+Dept and Number	COS 333
+Area	
+Title	Advanced C%Science Programming Techniques
+Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
+Prerequisites	COS 217 and COS 226.
+Professor	Brian W. Kernighan
+------------------------------------------------------------------------
+Class Id	8321
+Days	TTh
+Start time	11:00 AM
+End time	12:20 PM
+Building	FRIEN
+Room	006
+Course Id	3672
+Dept and Number	COS 333
+Area	
+Title	Advanced C%Science Programming Techniques
+Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
+Prerequisites	COS 217 and COS 226.
+Professor	Brian W. Kernighan
+------------------------------------------------------------------------
+Class Id	8321
+Days	TTh
+Start time	11:00 AM
+End time	12:20 PM
+Building	FRIEN
+Room	006
+Course Id	3672
+Dept and Number	COS 333
+Area	
+Title	Advanced C%Science Programming Techniques
+Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
+Prerequisites	COS 217 and COS 226.
+Professor	Brian W. Kernighan
+------------------------------------------------------------------------
+Class Id	8321
+Days	TTh
+Start time	11:00 AM
+End time	12:20 PM
+Building	FRIEN
+Room	006
+Course Id	3672
+Dept and Number	COS 333
+Area	
+Title	Advanced C%Science Programming Techniques
+Description	This is a course about the practice of programming. Programming is more than just writing code. Programmers must also assess tradeoffs, choose among design alternatives, debug and test, improve performance, and maintain software written by themselves & others. At the same time, they must be concerned with compatibility, robustness, and reliability, while meeting specifications. Students will have the opportunity to develop these skills by working on their own code and in group projects.
+Prerequisites	COS 217 and COS 226.
+Professor	Brian W. Kernighan
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: |8321|

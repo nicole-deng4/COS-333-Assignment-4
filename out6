@@ -1,0 +1,125 @@
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: |8321|
+------------------------------------------------------------------------
+No link found for classid: |7842|
+------------------------------------------------------------------------
+No link found for classid: |7850|
+------------------------------------------------------------------------
+No link found for classid: |7865|
+------------------------------------------------------------------------
+No link found for classid: |7872|
+------------------------------------------------------------------------
+No link found for classid: |7873|
+------------------------------------------------------------------------
+No link found for classid: |7859|
+------------------------------------------------------------------------
+No link found for classid: |7879|
+------------------------------------------------------------------------
+No link found for classid: |7886|
+------------------------------------------------------------------------
+No link found for classid: |7935|
+------------------------------------------------------------------------
+No link found for classid: |8036|
+------------------------------------------------------------------------
+No link found for classid: |7838|
+------------------------------------------------------------------------
+No link found for classid: |7839|
+------------------------------------------------------------------------
+No link found for classid: |7840|
+------------------------------------------------------------------------
+No link found for classid: |7841|
+------------------------------------------------------------------------
+No link found for classid: |7842|
+------------------------------------------------------------------------
+No link found for classid: |7863|
+------------------------------------------------------------------------
+No link found for classid: |8028|
+------------------------------------------------------------------------
+No link found for classid: |8063|
+------------------------------------------------------------------------
+No link found for classid: |8291|
+------------------------------------------------------------------------
+No link found for classid: |8667|
+------------------------------------------------------------------------
+No link found for classid: |8361|
+------------------------------------------------------------------------
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for get_by_text("").first
+    - locator resolved to <h4 class="modal-title">Registrar's Office</h4>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+    - waiting for element to be visible, enabled and stable
+
+------------------------------------------------------------------------
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for get_by_text(" ").first
+    - locator resolved to <h4 class="modal-title">Registrar's Office</h4>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+
+------------------------------------------------------------------------
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for get_by_text("   ").first
+    - locator resolved to <h4 class="modal-title">Registrar's Office</h4>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+    - waiting for element to be visible, enabled and stable
+
+------------------------------------------------------------------------
+Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for get_by_text("\t").first
+    - locator resolved to <h4 class="modal-title">Registrar's Office</h4>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+
+------------------------------------------------------------------------

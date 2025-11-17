@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            margin:0;
+            margin: 0;
+            padding: 0;
         }
         .header {
             position: fixed;
@@ -29,7 +30,7 @@
         .table-container {
             overflow-y: auto;
             width: 100%;
-            padding: 10px; 
+            padding: 10px;
             margin: 0;
         }
         .btn-classid {
@@ -37,22 +38,19 @@
             border: 2px solid black;
             color: black;
             cursor: pointer;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            padding-left: 8px;
-            padding-right: 8px;
+            padding: 2px 8px;
             border-radius: 0;
         }
     </style>
 </head>
 <body>
 
-    <header class="header p-12">
-        <div class = "search-bar">
+    <header class="header p-3">
+        <div class="search-bar">
             <div class="container-fluid">
-                <h1 class="text-center">Registrar's Office: Class Search</h1>
-                <div class="row mb-4">
-                    <div class= "col-md-3 col-12">
+                <h1 class="text-center mb-4">Registrar's Office: Class Search</h1>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-3 col-12">
                         <input type="text" id="deptInput" class="form-control" placeholder="Department">
                     </div>
                     <div class="col-md-3 col-12">
@@ -70,11 +68,11 @@
     </header>
 
     <div style="padding-top: 120px; padding-bottom: 70px;">
-        <div class="card">
+        <div class="card shadow-sm">
             <div class="card-body p-0">
                 <div class="table-container">
-                    <table id="overviewsTable" class="table table-striped mb-0">
-                        <thead>
+                    <table id="overviewsTable" class="table table-striped mb-0 align-middle">
+                        <thead class="table-dark">
                             <tr>
                                 <th>ClassId</th>
                                 <th>Dept</th>
@@ -93,8 +91,10 @@
 
     <footer class="footer">
         <div class="container">
-            <div class="text-center">
-                <span class="text-white">Created by Ziya Momin and Nicole Deng</span>
+            <div class="row">
+                <div class="col text-center">
+                    <span class="text-white">Created by Ziya Momin and Nicole Deng</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -130,216 +130,240 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        let currentRequest = null;
-        let debounceTimer = null;
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+ </script>
 
-        const deptInput = document.getElementById('deptInput');
-        const coursenumInput = document.getElementById('coursenumInput');
-        const areaInput = document.getElementById('areaInput');
-        const titleInput = document.getElementById('titleInput');
-        const overviewsTable = document.getElementById('overviewsTable').getElementsByTagName('tbody')[0];
+ <script>
+    'use strict';
 
-        function cancelCurrentRequest() {
-            if (currentRequest) {
-                currentRequest.abort();
-                currentRequest = null;
-            }
-        }
 
-        function fetchOverviews() {
-            cancelCurrentRequest();
+    let overviewsRequest = null;
+    let overviewsTimer = null;
 
-            const dept = deptInput.value.trim();
-            const coursenum = coursenumInput.value.trim();
-            const area = areaInput.value.trim();
-            const title = titleInput.value.trim();
 
-            let url = '/regoverviews?';
-            let first = true;
-            if (dept) {
-                url += (first ? '' : '&') + 'dept=' + encodeURIComponent(dept);
-                first = false;
-            }
-            if (coursenum) {
-                url += (first ? '' : '&') + 'coursenum=' + encodeURIComponent(coursenum);
-                first = false;
-            }
-            if (area) {
-                url += (first ? '' : '&') + 'area=' + encodeURIComponent(area);
-                first = false;
-            }
-            if (title) {
-                url += (first ? '' : '&') + 'title=' + encodeURIComponent(title);
-                first = false;
-            }
+    function displayOverviews(overviews) {
+        let overviewsTbody =
+            document.getElementById('overviewsTable').getElementsByTagName('tbody')[0];
 
-            const req = new XMLHttpRequest();
-            currentRequest = req;
+        overviewsTbody.innerHTML = '';
 
-            req.open('GET', url, true);
-            req.onload = function() {
-                if (req !== currentRequest) {
-                    return;
-                }
-                if (req.status === 200) {
-                    try {
-                        const response = JSON.parse(req.responseText);
-                        if (response[0] === true) {
-                            displayOverviews(response[1]);
-                        } else {
-                            alert('Error: ' + response[1]);
-                        }
-                    } catch (e) {
-                        alert('Error: Failed to parse response from server');
-                    }
-                } else {
-                    alert('Error: Failed to fetch data from server');
-                }
-                if (req === currentRequest) {
-                    currentRequest = null;
-                }
-            };
+        for (let i = 0; i < overviews.length; i += 1) {
+        let overview = overviews[i];
 
-            req.onerror = function() {
-                if (req !== currentRequest) {
-                    return;
-                }
-                alert('Error: Failed to fetch data from server');
-                if (req === currentRequest) {
-                    currentRequest = null;
-                }
-            };
+        let row = overviewsTbody.insertRow();
+        let classidCell = row.insertCell(0);
+        let deptCell = row.insertCell(1);
+        let coursenumCell = row.insertCell(2);
+        let areaCell = row.insertCell(3);
+        let titleCell = row.insertCell(4);
 
-            req.onabort = function() {
-                if (req === currentRequest) {
-                    currentRequest = null;
-                }
-            };
+        let classid = overview.classid;
+        let button = document.createElement('button');
+        button.id = 'button' + classid;
+        button.className = 'btn-classid';
+        button.textContent = classid;
+        button.addEventListener('click', function () {
+        getResultsDetails(classid);
+ });
 
-            req.send();
-        }
+        classidCell.appendChild(button);
+        deptCell.textContent = overview.dept;
+        coursenumCell.textContent = overview.coursenum;
+        areaCell.textContent = overview.area || '';
+        titleCell.textContent = overview.title || '';
+ }
+ }
 
-        function displayOverviews(overviews) {
-            overviewsTable.innerHTML = '';
+ function handleOverviewsResponse() {
+ if (this.status !== 200) {
+ alert('Error: Failed to fetch data from server');
+ overviewsRequest = null;
+ return;
+ }
 
-            for (let i = 0; i < overviews.length; i++) {
-                const row = overviewsTable.insertRow();
-                const classidCell = row.insertCell(0);
-                const deptCell = row.insertCell(1);
-                const coursenumCell = row.insertCell(2);
-                const areaCell = row.insertCell(3);
-                const titleCell = row.insertCell(4);
+ try {
+ let response = JSON.parse(this.responseText);
+ if (response[0] === true) {
+ displayOverviews(response[1]);
+ }
+ else {
+ alert('Error: ' + response[1]);
+ }
+ }
+ catch (e) {
+ alert('Error: Failed to parse response from server');
+ }
 
-                const classid = overviews[i].classid;
-                const button = document.createElement('button');
-                button.id = 'button' + classid;
-                button.className = 'btn-classid';
-                button.textContent = classid;
-                button.onclick = function() {
-                    getResultsDetails(classid);
-                };
-                classidCell.appendChild(button);
-                deptCell.textContent = overviews[i].dept;
-                coursenumCell.textContent = overviews[i].coursenum;
-                areaCell.textContent = overviews[i].area || '';
-                titleCell.textContent = overviews[i].title || '';
-            }
-        }
+ overviewsRequest = null;
+ }
 
-        function displayDetails(details) {
-            const classDetailsTable = document.querySelector('#classDetailsTable tbody');
-            const courseDetailsTable = document.querySelector('#courseDetailsTable tbody');
+ function handleOverviewsError() {
+ if (this.statusText !== 'abort') {
+ alert('Error: Failed to fetch data from server');
+ }
+ overviewsRequest = null;
+ }
 
-            classDetailsTable.innerHTML = '';
-            courseDetailsTable.innerHTML = '';
-            function addRow(tbody, label, value) {
-                const row = tbody.insertRow();
-                const labelCell = row.insertCell(0);
-                const valueCell = row.insertCell(1);
-                labelCell.innerHTML = '<strong>' + label + '</strong>';
-                valueCell.textContent = value || '';
-            }
+ function getOverviews() {
+ let deptInput = document.getElementById('deptInput');
+ let coursenumInput = document.getElementById('coursenumInput');
+ let areaInput = document.getElementById('areaInput');
+ let titleInput = document.getElementById('titleInput');
 
-            addRow(classDetailsTable, 'Class Id', details.classid);
-            addRow(classDetailsTable, 'Days', details.days || '');
-            addRow(classDetailsTable, 'Start time', details.starttime || '');
-            addRow(classDetailsTable, 'End time', details.endtime || '');
-            addRow(classDetailsTable, 'Building', details.bldg || '');
-            addRow(classDetailsTable, 'Room', details.roomnum || '');
+ let dept = deptInput.value.trim();
+ let coursenum = coursenumInput.value.trim();
+ let area = areaInput.value.trim();
+ let title = titleInput.value.trim();
 
-            addRow(courseDetailsTable, 'Course Id', details.courseid);
+ let url = '/regoverviews';
+ let first = true;
 
-            if (details.deptcoursenums && details.deptcoursenums.length > 0) {
-                details.deptcoursenums.forEach(function(item) {
-                    addRow(courseDetailsTable, 'Dept and Number', item.dept + ' ' + item.coursenum);
-                });
-            }
+ function addParam(name, value) {
+ if (value === '') {
+ return;
+ }
+ if (first) {
+ url += '?';
+ first = false;
+ }
+ else {
+ url += '&';
+ }
+ url += name + '=' + encodeURIComponent(value);
+ }
 
-            addRow(courseDetailsTable, 'Area', details.area || '');
-            addRow(courseDetailsTable, 'Title', details.title || '');
-            addRow(courseDetailsTable, 'Description', details.descrip || '');
-            addRow(courseDetailsTable, 'Prerequisites', details.prereqs || '');
+ addParam('dept', dept);
+ addParam('coursenum', coursenum);
+ addParam('area', area);
+ addParam('title', title);
 
-            let profText = '';
-            if (details.profnames && details.profnames.length > 0) {
-                profText = details.profnames.join('<br>');
-            }
-            const profRow = courseDetailsTable.insertRow();
-            const profLabelCell = profRow.insertCell(0);
-            const profValueCell = profRow.insertCell(1);
-            profLabelCell.innerHTML = '<strong>Professor</strong>';
-            profValueCell.innerHTML = profText;
-        }
+ if (overviewsRequest !== null) {
+ overviewsRequest.abort();
+ }
 
-        function debouncedFetchOverviews() {
-            if (debounceTimer) {
-                clearTimeout(debounceTimer);
-            }
+ overviewsRequest = new XMLHttpRequest();
+ overviewsRequest.onload = handleOverviewsResponse;
+ overviewsRequest.onerror = handleOverviewsError;
+ overviewsRequest.open('GET', url);
+ overviewsRequest.send();
+ }
 
-            debounceTimer = setTimeout(function() {
-                fetchOverviews();
-                debounceTimer = null;
-            }, 500);
-        }
+ function debouncedGetOverviews() {
+ window.clearTimeout(overviewsTimer);
+ overviewsTimer = window.setTimeout(getOverviews, 500);
+ }
 
-        deptInput.addEventListener('input', debouncedFetchOverviews);
-        coursenumInput.addEventListener('input', debouncedFetchOverviews);
-        areaInput.addEventListener('input', debouncedFetchOverviews);
-        titleInput.addEventListener('input', debouncedFetchOverviews);
+ function addDetailsRow(tbody, label, value) {
+ let row = tbody.insertRow();
+ let labelCell = row.insertCell(0);
+ let valueCell = row.insertCell(1);
+ labelCell.innerHTML = '<strong>' + label + '</strong>';
+ valueCell.textContent = value || '';
+ }
 
-        function getResultsDetails(classid) {
-            const req = new XMLHttpRequest();
-            req.open('GET', '/regdetails?classid=' + encodeURIComponent(classid), true);
-            req.onload = function() {
-                if (req.status === 200) {
-                    try {
-                        const response = JSON.parse(req.responseText);
-                        if (response[0] === true) {
-                            displayDetails(response[1]);
-                            const modal = new bootstrap.Modal(document.getElementById('classDetailsModal'));
-                            modal.show();
-                        } else {
-                            alert('Error: ' + response[1]);
-                        }
-                    } catch (e) {
-                        alert('Error: Failed to parse response from server');
-                    }
-                } else {
-                    alert('Error: Failed to fetch data from server');
-                }
-            };
-            req.onerror = function() {
-                alert('Error: Failed to fetch data from server');
-            };
-            req.send();
-        }
+ function displayDetails(details) {
+ let classDetailsTbody =
+ document.getElementById('classDetailsTable').getElementsByTagName('tbody')[0];
+ let courseDetailsTbody =
+ document.getElementById('courseDetailsTable').getElementsByTagName('tbody')[0];
 
-        window.addEventListener('load', function() {
-            fetchOverviews();
-        });
-    </script>
+ classDetailsTbody.innerHTML = '';
+ courseDetailsTbody.innerHTML = '';
+
+ addDetailsRow(classDetailsTbody, 'Class Id', details.classid);
+ addDetailsRow(classDetailsTbody, 'Days', details.days || '');
+ addDetailsRow(classDetailsTbody, 'Start time', details.starttime || '');
+ addDetailsRow(classDetailsTbody, 'End time', details.endtime || '');
+ addDetailsRow(classDetailsTbody, 'Building', details.bldg || '');
+ addDetailsRow(classDetailsTbody, 'Room', details.roomnum || '');
+
+ addDetailsRow(courseDetailsTbody, 'Course Id', details.courseid);
+
+ if (details.deptcoursenums && details.deptcoursenums.length > 0) {
+ for (let i = 0; i < details.deptcoursenums.length; i += 1) {
+ let item = details.deptcoursenums[i];
+ addDetailsRow(
+ courseDetailsTbody,
+ 'Dept and Number',
+ item.dept + ' ' + item.coursenum
+ );
+ }
+ }
+
+ addDetailsRow(courseDetailsTbody, 'Area', details.area || '');
+ addDetailsRow(courseDetailsTbody, 'Title', details.title || '');
+ addDetailsRow(courseDetailsTbody, 'Description', details.descrip || '');
+ addDetailsRow(courseDetailsTbody, 'Prerequisites', details.prereqs || '');
+
+ let profText = '';
+ if (details.profnames && details.profnames.length > 0) {
+ profText = details.profnames.join('\n');
+ }
+ let profRow = courseDetailsTbody.insertRow();
+ let profLabelCell = profRow.insertCell(0);
+ let profValueCell = profRow.insertCell(1);
+ profLabelCell.innerHTML = '<strong>Professor</strong>';
+ profValueCell.innerHTML = profText.replace(/\n/g, '<br>');
+ }
+
+ function handleDetailsResponse() {
+ if (this.status !== 200) {
+ alert('Error: Failed to fetch data from server');
+ return;
+ }
+
+ try {
+ let response = JSON.parse(this.responseText);
+ if (response[0] === true) {
+ displayDetails(response[1]);
+ let modalNode = document.getElementById('classDetailsModal');
+ let modal = new bootstrap.Modal(modalNode);
+ modal.show();
+ }
+ else {
+ alert('Error: ' + response[1]);
+ }
+ }
+ catch (e) {
+ alert('Error: Failed to parse response from server');
+ }
+ }
+
+ function handleDetailsError() {
+ alert('Error: Failed to fetch data from server');
+ }
+
+ function getResultsDetails(classid) {
+ let encodedClassid = encodeURIComponent(classid);
+ let url = '/regdetails?classid=' + encodedClassid;
+
+ let request = new XMLHttpRequest();
+ request.onload = handleDetailsResponse;
+ request.onerror = handleDetailsError;
+ request.open('GET', url);
+ request.send();
+ }
+
+ function setupSearchInputs() {
+ let deptInput = document.getElementById('deptInput');
+ let coursenumInput = document.getElementById('coursenumInput');
+ let areaInput = document.getElementById('areaInput');
+ let titleInput = document.getElementById('titleInput');
+
+ deptInput.addEventListener('input', debouncedGetOverviews);
+ coursenumInput.addEventListener('input', debouncedGetOverviews);
+ areaInput.addEventListener('input', debouncedGetOverviews);
+ titleInput.addEventListener('input', debouncedGetOverviews);
+ }
+
+ function setup() {
+ setupSearchInputs();
+ getOverviews();
+ }
+
+ document.addEventListener('DOMContentLoaded', setup);
+ </script>
 </body>
 </html>
+

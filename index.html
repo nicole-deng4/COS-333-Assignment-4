@@ -41,14 +41,21 @@
             padding: 2px 8px;
             border-radius: 0;
         }
+        header h1 {
+            font-size: 2.5rem;
+        }
+        thead {
+            background-color: white !important;
+            color: black !important;
+        }
     </style>
 </head>
 <body>
 
-    <header class="header p-3">
+    <header class="header px-3 pb-3">
         <div class="search-bar">
             <div class="container-fluid">
-                <h1 class="text-center mb-4">Registrar's Office: Class Search</h1>
+                <h1 class="text-center" style="margin-top: 0; padding-top: 0;">Registrar's Office: Class Search</h1>
                 <div class="row g-3 mb-3">
                     <div class="col-md-3 col-12">
                         <input type="text" id="deptInput" class="form-control" placeholder="Department">
@@ -72,7 +79,7 @@
             <div class="card-body p-0">
                 <div class="table-container">
                     <table id="overviewsTable" class="table table-striped mb-0 align-middle">
-                        <thead class="table-dark">
+                        <thead>
                             <tr>
                                 <th>ClassId</th>
                                 <th>Dept</th>

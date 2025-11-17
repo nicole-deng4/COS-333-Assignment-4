@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 """
-Implements a Flask web application for Princeton University's registrar system.
+Implements a Flask web application for Princeton University's
+registrar system.
 """
 
 import sys
@@ -16,10 +17,10 @@ DATABASE = "reg.sqlite"
 
 def string_handler(s):
     """
-    Processes string input for SQL LIKE queries by escaping special characters.
-    Converts empty/None strings to '%' wildcard and escapes SQL special
-    characters to treat them as literal characters rather than
-    wildcards.
+    Processes string input for SQL LIKE queries by escaping special
+    characters. Converts empty/None strings to '%' wildcard and escapes
+    SQL special characters to treat them as literal characters rather
+    than wildcards.
     """
     if not s or s.strip() == "":
         return "%"
@@ -110,7 +111,8 @@ def reg_details():
         row = cursor.fetchone()
         if row is None:
             conn.close()
-            return jsonify([False, f"no class with classid {classid} exists"])
+            return jsonify([False,
+                           f"no class with classid {classid} exists"])
 
         class_info = dict(row)
         course_id = class_info["courseid"]

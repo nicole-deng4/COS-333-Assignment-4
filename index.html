@@ -147,6 +147,7 @@
 
     let overviewsRequest = null;
     let overviewsTimer = null;
+    let detailsRequest = null;
 
 
     function displayOverviews(overviews) {
@@ -170,9 +171,7 @@
         button.id = 'button' + classid;
         button.className = 'btn-classid';
         button.textContent = classid;
-        button.addEventListener('click', function () {
-        getResultsDetails(classid);
- });
+        button.setAttribute('onclick', 'getResultsDetails(' + classid + ')');
 
         classidCell.appendChild(button);
         deptCell.textContent = overview.dept;
@@ -315,6 +314,7 @@
  function handleDetailsResponse() {
     if (this.status !== 200) {
         alert('Error: Failed to fetch data from server');
+        detailsRequest = null;
     return;
  }
 
@@ -333,21 +333,30 @@
  catch (e) {
     alert('Error: Failed to parse response from server');
  }
+
+ detailsRequest = null;
  }
 
  function handleDetailsError() {
-    alert('Error: Failed to fetch data from server');
+    if (this.statusText !== 'abort') {
+        alert('Error: Failed to fetch data from server');
+    }
+    detailsRequest = null;
  }
 
  function getResultsDetails(classid) {
     let encodedClassid = encodeURIComponent(classid);
     let url = '/regdetails?classid=' + encodedClassid;
 
-    let request = new XMLHttpRequest();
-    request.onload = handleDetailsResponse;
-    request.onerror = handleDetailsError;
-    request.open('GET', url);
-    request.send();
+    if (detailsRequest !== null) {
+        detailsRequest.abort();
+    }
+
+    detailsRequest = new XMLHttpRequest();
+    detailsRequest.onload = handleDetailsResponse;
+    detailsRequest.onerror = handleDetailsError;
+    detailsRequest.open('GET', url);
+    detailsRequest.send();
  }
 
  function setupSearchInputs() {
